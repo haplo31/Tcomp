@@ -1,0 +1,8 @@
+prefix=/home/john/catkin_ws/install
+
+Name: ratslam_ros
+Description: Description of ratslam_ros
+Version: 0.0.1
+Cflags: -I/home/john/catkin_ws/install/include
+Libs: -L/home/john/catkin_ws/install/lib 
+Requires: message_runtime geometry_msgs std_msgs

@@ -1,0 +1,15 @@
+(cl:defpackage ratslam_ros-msg
+  (:use )
+  (:export
+   "<TOPOLOGICALNODE>"
+   "TOPOLOGICALNODE"
+   "<VIEWTEMPLATE>"
+   "VIEWTEMPLATE"
+   "<TOPOLOGICALACTION>"
+   "TOPOLOGICALACTION"
+   "<TOPOLOGICALEDGE>"
+   "TOPOLOGICALEDGE"
+   "<TOPOLOGICALMAP>"
+   "TOPOLOGICALMAP"
+  ))
+
