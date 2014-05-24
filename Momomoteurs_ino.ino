@@ -20,10 +20,10 @@ float time=0;
 //MOTOR
 //int IN1=2;
 
-int IN1= 28;  
+int IN1= 7;  
 //7; shield
 
-int IN2=26;
+//int IN2=26;
 //int MotorD=3;
 
 int MotorG = 5; 
@@ -31,13 +31,13 @@ int MotorG = 5;
 
 //int IN3=7;
 
-int IN3 = 24;
+int IN3 = 4;
 //=4;
 
-int IN4=22;
+//int IN4=22;
 //int MotorG=5;
 
-int MotorD =3;
+int MotorD =6;
 //=6;
 int stop=0;
 int trig = 12; 
@@ -115,15 +115,15 @@ void setup()
          EncoderInit();//Initialize the module
 	Serial.begin(115200);   // Initialisation port COM
 	pinMode(IN1,OUTPUT);
-	pinMode(IN2,OUTPUT);
+	//pinMode(IN2,OUTPUT);
 	pinMode(IN3,OUTPUT);
-	pinMode(IN4,OUTPUT);
+	//pinMode(IN4,OUTPUT);
 	pinMode(MotorD,OUTPUT);
 	pinMode(MotorG,OUTPUT);
         digitalWrite(IN1,HIGH);
-        digitalWrite(IN2,LOW);
+        //digitalWrite(IN2,LOW);
         digitalWrite(IN3,LOW);
-        digitalWrite(IN4,HIGH);
+        //digitalWrite(IN4,HIGH);
         analogWrite(MotorD,0);  // Sortie moteur ? 0
 	analogWrite(MotorG,0);  // Sortie moteur ? 0
 	                // Pause de 5 sec pour laisser le temps au 	moteur de s'arr?ter si celui-ci est en marche
@@ -319,9 +319,9 @@ if (( ((TotalCodeurG+TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_pa
       
       stop=1;
         digitalWrite(IN1,HIGH);
-        digitalWrite(IN2,LOW);
+        //digitalWrite(IN2,LOW);
         digitalWrite(IN3,LOW);
-        digitalWrite(IN4,HIGH);
+        //digitalWrite(IN4,HIGH);
        // cmdD=255;
           
      consigne_moteur_nombre_tours_par_secondeG=0;
@@ -348,16 +348,16 @@ else
   if (avancer==1)
   {
       digitalWrite(IN1,HIGH);
-        digitalWrite(IN2,LOW);
+        //digitalWrite(IN2,LOW);
         digitalWrite(IN3,LOW);
-        digitalWrite(IN4,HIGH);
+        //digitalWrite(IN4,HIGH);
   }
   else if (reculer==1)
   {
      digitalWrite(IN1,LOW);
-          digitalWrite(IN2,HIGH);
+          //digitalWrite(IN2,HIGH);
         digitalWrite(IN3,HIGH);
-        digitalWrite(IN4,LOW);
+        //digitalWrite(IN4,LOW);
   }
   if((distancecm/(3.14*diamrouecm))<1)
   {
@@ -456,12 +456,12 @@ if ( (((TotalCodeurG+TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_pa
   if (TournerGauche==1)
   {
   digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
+  //digitalWrite(IN2,LOW);
   }
   else if (TournerDroite==1)
   {
    digitalWrite(IN3,LOW);
-   digitalWrite(IN4,HIGH);
+   //digitalWrite(IN4,HIGH);
   }
   stop=1;
   TournerGauche=0;
@@ -475,12 +475,12 @@ else
   if (TournerGauche==1)
   {
   digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH); 
+  //digitalWrite(IN2,HIGH); 
   }
   else if (TournerDroite==1)
   {
    digitalWrite(IN3,HIGH);
-   digitalWrite(IN4,LOW);
+   //digitalWrite(IN4,LOW);
   }
    distancecm=(rotationdegres/360)*distancerouecm*3.14;
    if((distancecm/(3.14*diamrouecm))<1)
