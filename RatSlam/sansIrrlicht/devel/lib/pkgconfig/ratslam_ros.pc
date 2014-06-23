@@ -1,0 +1,8 @@
+prefix=/home/drougard/TCOMPgit/RatSlam/sansIrrlicht/devel
+
+Name: ratslam_ros
+Description: Description of ratslam_ros
+Version: 0.0.1
+Cflags: -I/home/drougard/TCOMPgit/RatSlam/sansIrrlicht/devel/include
+Libs: -L/home/drougard/TCOMPgit/RatSlam/sansIrrlicht/devel/lib 
+Requires: message_runtime geometry_msgs std_msgs
