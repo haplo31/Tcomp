@@ -133,7 +133,22 @@ cerr << "FIN BONJOUR MESDAMES ET MESSIEURS!!!" << endl;
 int main(int argc, char * argv[])
 {
 
-  std::string topic_root = "/irat_red/";
+  if (argc < 2)
+  {
+    ROS_FATAL_STREAM("USAGE: " << argv[0] << " <config_file>");
+    exit(-1);
+  }
+  std::string topic_root = "";
+  boost::property_tree::ptree settings, ratslam_settings, general_settings;
+  read_ini(argv[1], settings);
+
+  get_setting_child(ratslam_settings, settings, "ratslam", true);
+  get_setting_child(general_settings, settings, "general", true);
+  get_setting_from_ptree(topic_root, general_settings, "topic_root", (std::string) "");
+
+	cerr << "-1-" << endl;
+
+//  std::string topic_root = "/irat_red/";
 
 	cerr << "-1-" << endl;
 
@@ -142,7 +157,7 @@ if (!ros::isInitialized())
     ros::init(argc, argv, "TOTOlistenerMAP");
   }
 
-	cerr << "-2-" << endl;
+	cerr << "-2-   " + topic_root << endl;
 
   ros::NodeHandle node;
 
@@ -152,7 +167,7 @@ if (!ros::isInitialized())
 
 		cerr << "-3-" << endl;	
 	  
-	ros::Subscriber sub_MAP = node.subscribe<ratslam_ros::TopologicalMap>(topic_root + "ExperienceMap/Map", 0, boost::bind(chatterCallback, _1, em2),
+	ros::Subscriber sub_MAP = node.subscribe<ratslam_ros::TopologicalMap>(topic_root + "/ExperienceMap/Map", 0, boost::bind(chatterCallback, _1, em2),
                                                                               ros::VoidConstPtr(), ros::TransportHints().tcpNoDelay());
 
 	cerr << "-4-" << endl;	

@@ -14,6 +14,6 @@
 
 
 	<!-- POUR AFFICHER LA MAP -->
-	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="/irat_red/ExperienceMap/Map" />
+	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="$(find ratslam_ros)/config/config_irataus.txt" />
 	
 </launch>
