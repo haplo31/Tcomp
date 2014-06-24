@@ -224,13 +224,14 @@ void LwheelSpeed()
 void tempo()
 {
 time++;
+
 if (avancer==1)
 {
   TempoCodeur=(TotalCodeurG+TotalCodeurD)-TempoCodeurPrec;
   TempoCodeurPrec=TotalCodeurG+TotalCodeurD;
- Serial.print((TempoCodeur*diamrouecm*314)/(4*rapport_reducteur*tick_par_tour_codeuse));
- Serial.print(";");
- Serial.println("0");
+ //Serial.print((TempoCodeur*diamrouecm*314)/(4*rapport_reducteur*tick_par_tour_codeuse));
+ //Serial.print(";");
+ //Serial.println("0");
 }
 else
 {
@@ -239,18 +240,18 @@ else
     TempoCodeur=(TotalCodeurG+TotalCodeurD)-TempoCodeurPrec;
   TempoCodeurPrec=TotalCodeurG+TotalCodeurD;
   calculTempo=((TempoCodeur*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse))/(distancerouecm*3.14);
-     Serial.print("0");
-     Serial.print(";-");
-     Serial.println(calculTempo);
+    // Serial.print("0");
+    // Serial.print(";-");
+     //Serial.println(calculTempo);
   }
     if (TournerDroite==1)
   {
     TempoCodeur=(TotalCodeurG+TotalCodeurD)-TempoCodeurPrec;
   TempoCodeurPrec=TotalCodeurG+TotalCodeurD;
   calculTempo=((TempoCodeur*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse))/(distancerouecm*3.14);
-     Serial.print("0");
-     Serial.print(";");
-     Serial.println(calculTempo);
+    // Serial.print("0");
+    // Serial.print(";");
+   //  Serial.println(calculTempo);
   }
 }
 }
@@ -364,17 +365,22 @@ else
   botch=sqrt((distancecm)/(diamrouecm*3.14));
  if (time<(botch*10))
  {
- float timef = (float) time; 
+ timef = (float) time; 
  consigne_moteur_nombre_tours_par_secondeG= 0.1*(timef+cmdParallele);
  consigne_moteur_nombre_tours_par_secondeD=0.1*(timef-cmdParallele);
+ Serial.println("Accel");
  }
  else
  {
  timef2= (float) time;
+ Serial.println(consigne_moteur_nombre_tours_par_secondeG);
  consigne_moteur_nombre_tours_par_secondeG= botch-( 0.1*((timef2-timef)+cmdParallele) );
  consigne_moteur_nombre_tours_par_secondeD = botch-( 0.1*((timef2-timef)-cmdParallele) );
   if  ((consigne_moteur_nombre_tours_par_secondeG<0.05)||(consigne_moteur_nombre_tours_par_secondeD<0.05))
   {
+    Serial.println(botch);
+    Serial.println(timef);
+    Serial.println(timef2);
   distancecm=0;
   }
   }
@@ -488,7 +494,7 @@ else
   botch=sqrt((distancecm)/(diamrouecm*3.14));
  if (time<(botch*10) )
  {
- float timef = (float) time; 
+ timef = (float) time; 
  consigne_moteur_nombre_tours_par_secondeG= 0.1*(timef+cmdParallele);
  consigne_moteur_nombre_tours_par_secondeD=0.1*(timef-cmdParallele);
  }
