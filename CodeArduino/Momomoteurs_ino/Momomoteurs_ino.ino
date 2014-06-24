@@ -361,8 +361,8 @@ else
   }
   if((distancecm/(3.14*diamrouecm))<1)
   {
-  botch=sqrt((distancecm)/(diamrouecm*3.14/2))*5;
- if (time<(botch*2))
+  botch=sqrt((distancecm)/(diamrouecm*3.14));
+ if (time<(botch*10))
  {
  float timef = (float) time; 
  consigne_moteur_nombre_tours_par_secondeG= 0.1*(timef+cmdParallele);
@@ -371,8 +371,8 @@ else
  else
  {
  timef2= (float) time;
- consigne_moteur_nombre_tours_par_secondeG= botch/5-( 0.1*((timef2-timef)+cmdParallele) );
- consigne_moteur_nombre_tours_par_secondeD = botch/5-( 0.1*((timef2-timef)-cmdParallele) );
+ consigne_moteur_nombre_tours_par_secondeG= botch-( 0.1*((timef2-timef)+cmdParallele) );
+ consigne_moteur_nombre_tours_par_secondeD = botch-( 0.1*((timef2-timef)-cmdParallele) );
   if  ((consigne_moteur_nombre_tours_par_secondeG<0.05)||(consigne_moteur_nombre_tours_par_secondeD<0.05))
   {
   distancecm=0;
@@ -485,8 +485,8 @@ else
    distancecm=(rotationdegres/360)*distancerouecm*3.14;
    if((distancecm/(3.14*diamrouecm))<1)
   {
-  botch=sqrt((distancecm)/(diamrouecm*3.14/4));
- if (time<(botch*5) )
+  botch=sqrt((distancecm)/(diamrouecm*3.14));
+ if (time<(botch*10) )
  {
  float timef = (float) time; 
  consigne_moteur_nombre_tours_par_secondeG= 0.1*(timef+cmdParallele);
