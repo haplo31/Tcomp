@@ -1,0 +1,49 @@
+<html>
+<script type="text/javascript">
+function atteindre_url()
+{
+var distancesaisie=document.getElementByid('distancesaisie');
+windows.location.href=saisie_champ_text+"lol";
+</script>
+<head>
+<script Language="Javascript">
+function set0()
+{
+    document.location="cgi-bin/set0.cgi";
+}
+function set1()
+{
+    document.location="cgi-bin/set1.cgi";
+}
+function set01()
+{
+    document.location="cgi-bin/set01.cgi";
+}
+function clear01(event)
+{
+    document.location="cgi-bin/clear01.cgi";
+}
+</script>
+</head>
+<body>
+    <div style="text-align:center">
+    <h1>Raspberry Pi GPIO</h1>
+<br>
+<form name="form1" method="post" action="">   
+Distance: <input type =text name="distance" id="distancesaisie" size=5 maxlength=5> cm
+<br>
+Degres: <input type =text name="degres" id="degressaisis" size=5 maxlength=5> degres
+<br>
+<input type="button" name="ok" value"OK" onclick="atteindre_url();" >
+</form>
+<br>    
+<img src="page/forward.jpg" id="f" onmousedown="set01()">
+<br>
+    <img src="page/left.jpg" id="l" onmousedown="set0()">
+    <img src="page/right.jpg" id="r" onmousedown="set1()">
+<br>
+    <img src="page/stop.jpg" id="s" onmousedown="clear01(event)">
+    </div>
+
+</body>
+</html>

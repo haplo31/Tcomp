@@ -1,0 +1,11 @@
+echo 'PiFace packages are now included in Raspbian. The old installer can be found at http://pi.cs.man.ac.uk/download/old_install.txt .
+ Visit http://www.piface.org.uk/guides for more information. 
+
+To install in Raspbian, type the following into a terminal.  
+
+sudo apt-get update; sudo apt-get install python3-pifacedigitalio python-pifacedigitalio 
+
+
+To install the emulator and to use with scratch run 
+
+sudo apt-get install python3-pifacedigital-emulator python3-pifacedigital-scratch-handler' 
