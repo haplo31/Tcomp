@@ -263,8 +263,7 @@ var src="page/test.jpg"
 var valeurcm
 var recupwidth
 var reso
-// fonction ï¿½ appeler dans le onload de BODY
-
+// MODIFIER TRANSFERT DISTANCE ET DEGRES POUR ENVOYER AUSSI A,R,G ou D
 function TransfertDistance()
 {
 	valeurcm=$("input.knob").val();
@@ -280,7 +279,10 @@ function TransfertDegres()
 	document.location="cgi-bin/TransfertDegres.py?degres="+valeurcm;
 
 }
-
+<?php
+$ListeCommandes=array(25,32);
+$Tailletableau=0;
+?>
 
 function str_pad(input, pad_length, pad_string, pad_type) {
   //  discuss at: http://phpjs.org/functions/str_pad/
@@ -328,16 +330,29 @@ function str_pad(input, pad_length, pad_string, pad_type) {
 
   return input;
 }
+
 function Avancer()
 {
+ <?php
+  $ListeCommandes[$Tailletableau]='A'+$distancesaisie;
+  $Tailletableau++;
+ ?> 
   document.location="cgi-bin/Avancer.py";
 }
 function TournerG()
 {
+   <?php
+  $ListeCommandes[$Tailletableau]='G'+$degressaisis;
+  $Tailletableau++;
+ ?>
     document.location="cgi-bin/TournerG.py";
 }
 function TournerD()
 {
+   <?php
+  $ListeCommandes[$Tailletableau]='D'+$degressaisis;
+  $Tailletableau++;
+ ?>
     document.location="cgi-bin/TournerD.py";
 }
 function Stop()
@@ -346,6 +361,10 @@ function Stop()
 }
 function Reculer()
 {
+   <?php
+  $ListeCommandes[$Tailletableau]='R'+$distancesaisie;
+  $Tailletableau++;
+ ?>
 document.location="cgi-bin/Reculer.py";
 }
 function ActiverCam()
@@ -355,13 +374,33 @@ document.location="cgi-bin/ActiverCam.py";
 
 }
 
-
         </script>
 
     </head>
  <body onLoad="RefreshIMG()">
  <div style="position:absolute;left:10%;top:5%">
 <input class="knob" data-min="0" data-max="150" data-angleOffset="-90" data-step="5" data-angleArc=360 value="0" data-fgColor="#ffec03" data-displayInput=true data-width="300"  data-height="300" data-thickness=".3">
+
+<?php
+while ($Tailletableau>0) //TROUVER MOYEN DE RELANCER CA TOUTES LES SECONDES
+{
+    //ICI VERIFIER SI PROCESS DU BASH QUI ATTEND ARDUINO EST FERME
+    //SI OUI
+    $Tailletableau--; //On decremente ici pour rester dans le while tant que l'arduino a pas dit OK
+    // du coup on voit si on envoit la commande avec le if is_null du dessous
+    $CommandToSend = array_shift($ListeCommandes); //Commande pour recup valeur 1 et decaler valeurs tableau
+    if (is_null($CommandToSend))
+    {
+    echo ('fini');
+    }
+    else
+    {
+    echo ($CommandToSend);
+    }
+    //SI NON ON FAIT QUE DALLE
+
+}
+?>
 
 
 
