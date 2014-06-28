@@ -268,19 +268,23 @@ function TransfertDistance()
 {
 	valeurcm=$("input.knob").val();
 	alert(valeurcm);
-	valeurcm=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
-	document.location="cgi-bin/TransfertDistance.py?distancecm="+valeurcm;
+  <?php
+	$distancesaisie=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
+  ?>
+	//document.location="cgi-bin/TransfertDistance.py?action="+action+"distancecm="+valeurcm;
 }
 function TransfertDegres()
 {
 	valeurcm=$("input.knob2").val();
 	alert(valeurcm);
-	valeurcm=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
-	document.location="cgi-bin/TransfertDegres.py?degres="+valeurcm;
+  <?php
+	$degressaisis=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
+  ?>
+	//document.location="cgi-bin/TransfertDegres.py?action="+action+"degres="+valeurcm;
 
 }
 <?php
-$ListeCommandes=array(25,32);
+$ListeCommandes=array();
 $Tailletableau=0;
 ?>
 
@@ -333,27 +337,27 @@ function str_pad(input, pad_length, pad_string, pad_type) {
 
 function Avancer()
 {
- <?php
-  $ListeCommandes[$Tailletableau]='A'+$distancesaisie;
-  $Tailletableau++;
- ?> 
-  document.location="cgi-bin/Avancer.py";
+  <?php
+   $Tailletableau++;
+   $ListeCommandes[$Tailletableau]='A'+$distancesaisie;
+  ?> 
+//document.location="cgi-bin/Avancer.py";
 }
 function TournerG()
 {
-   <?php
-  $ListeCommandes[$Tailletableau]='G'+$degressaisis;
-  $Tailletableau++;
- ?>
-    document.location="cgi-bin/TournerG.py";
+  <?php
+   $Tailletableau++;
+   $ListeCommandes[$Tailletableau]='G'+$degressaisis;
+  ?>
+//document.location="cgi-bin/TournerG.py";
 }
 function TournerD()
 {
-   <?php
-  $ListeCommandes[$Tailletableau]='D'+$degressaisis;
-  $Tailletableau++;
- ?>
-    document.location="cgi-bin/TournerD.py";
+  <?php
+   $Tailletableau++;
+   $ListeCommandes[$Tailletableau]='D'+$degressaisis;
+  ?>
+//document.location="cgi-bin/TournerD.py";
 }
 function Stop()
 {
@@ -361,16 +365,16 @@ function Stop()
 }
 function Reculer()
 {
-   <?php
-  $ListeCommandes[$Tailletableau]='R'+$distancesaisie;
-  $Tailletableau++;
- ?>
-document.location="cgi-bin/Reculer.py";
+  <?php
+   $Tailletableau++;
+   $ListeCommandes[$Tailletableau]='R'+$distancesaisie;
+  ?>
+//document.location="cgi-bin/Reculer.py";
 }
 function ActiverCam()
 {
 alert("Ok");
-document.location="cgi-bin/ActiverCam.py";
+//document.location="cgi-bin/ActiverCam.py";
 
 }
 
@@ -396,6 +400,8 @@ while ($Tailletableau>0) //TROUVER MOYEN DE RELANCER CA TOUTES LES SECONDES
     else
     {
     echo ($CommandToSend);
+    echo "<script>document.location='cgi-bin/Reculer.py'</script>";
+   //document.location="cgi-bin/TransfertDegres.py?action="+echo(ListeCommandes[1]);
     }
     //SI NON ON FAIT QUE DALLE
 
