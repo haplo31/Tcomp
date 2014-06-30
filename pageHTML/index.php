@@ -392,7 +392,8 @@ while ($Tailletableau>0) //TROUVER MOYEN DE RELANCER CA TOUTES LES SECONDES
     //SI OUI
     $Tailletableau--; //On decremente ici pour rester dans le while tant que l'arduino a pas dit OK
     // du coup on voit si on envoit la commande avec le if is_null du dessous
-    $CommandToSend = array_shift($ListeCommandes); //Commande pour recup valeur 1 et decaler valeurs tableau
+    var $CommandToSend = $ListeCommandes[1]; //On prend la valeur 1 vu que la premiere est toujours ecrite dans 1
+    $CommandPrec = array_shift($ListeCommandes); //Commande pour recup valeur 1 et decaler valeurs tableau
     if (is_null($CommandToSend))
     {
     echo ('fini');
