@@ -39,13 +39,14 @@ cv::Mat I;
 
 void chatterCallback(ratslam_ros::TopologicalMapConstPtr em_map, ratslam::ExperienceMap *em2)
 {
+	
 	//cerr << em_map->node[0].pose.position.x << endl;
         //cerr << em_map->node[0].pose.position.y << endl; 
 	//float xxx = path->node[0].pose.position.x;
 	//float yyy = path->node[0].pose.position.y;    
 	//  float xxx = path.poses[0].position.x;
 	//  float yyy = path.poses[0].position.y;
-  	cerr << " BONJOUR MESDAMES ET MESSIEURS!!!   LE POINT X:" << em_map->node[0].pose.position.x << " --- ET LE POINT Y:" << em_map->node[0].pose.position.y << endl;
+  	//cerr << " BONJOUR MESDAMES ET MESSIEURS!!!   LE POINT X:" << em_map->node[0].pose.position.x << " --- ET LE POINT Y:" << em_map->node[0].pose.position.y << endl;
 
 int NB = em_map->node.size();
 double* tabloX = new double[NB];
@@ -106,7 +107,7 @@ I = Mat::zeros(HEIGHT, WIDTH, CV_8UC1);
 for (int i = 1; i < NB; i++)
 {
 
-cerr << " " << tabloX[i] << " " << tabloY[i] << endl;
+//cerr << " " << tabloX[i] << " " << tabloY[i] << endl;
 
 
 double pointX = (tabloX[i] - minimumX)*I.rows/(maximumX-minimumX);
@@ -124,7 +125,7 @@ cvShowImage("Original", &iplimg);
 //imshow("la map", I);
 cvWaitKey(2); 
 
-cerr << "FIN BONJOUR MESDAMES ET MESSIEURS!!!" << endl;
+cerr << "visual map updated [map]" << endl;
 
 
 
@@ -146,35 +147,17 @@ int main(int argc, char * argv[])
   get_setting_child(general_settings, settings, "general", true);
   get_setting_from_ptree(topic_root, general_settings, "topic_root", (std::string) "");
 
-	cerr << "-1-" << endl;
-
-//  std::string topic_root = "/irat_red/";
-
-	cerr << "-1-" << endl;
 
 if (!ros::isInitialized())
   {
     ros::init(argc, argv, "TOTOlistenerMAP");
   }
 
-	cerr << "-2-   " + topic_root << endl;
-
   ros::NodeHandle node;
-
-	cerr << "-3-" << endl;  
-
   ratslam::ExperienceMap * em2; /* = new ratslam::ExperienceMap(ratslam_settings);*/
-
-		cerr << "-3-" << endl;	
-	  
-	ros::Subscriber sub_MAP = node.subscribe<ratslam_ros::TopologicalMap>(topic_root + "/ExperienceMap/Map", 0, boost::bind(chatterCallback, _1, em2),
+  ros::Subscriber sub_MAP = node.subscribe<ratslam_ros::TopologicalMap>(topic_root + "/ExperienceMap/Map", 0, boost::bind(chatterCallback, _1, em2),
                                                                               ros::VoidConstPtr(), ros::TransportHints().tcpNoDelay());
-
-	cerr << "-4-" << endl;	
-
   ros::spin();
-
-	cerr << "-5-" << endl;
 
   return 0;
 }

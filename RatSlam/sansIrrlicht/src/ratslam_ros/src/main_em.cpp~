@@ -162,7 +162,7 @@ void action_callback(ratslam_ros::TopologicalActionConstPtr action, ratslam::Exp
 
   static ros::Time prev_pub_time(0);
 
-  if (action->header.stamp - prev_pub_time > ros::Duration(30.0))
+  if (action->header.stamp - prev_pub_time > ros::Duration(1.0))
   {
     prev_pub_time = action->header.stamp;
 
@@ -196,7 +196,7 @@ void action_callback(ratslam_ros::TopologicalActionConstPtr action, ratslam::Exp
       em_map.edge[i].transform.rotation.w = cos(em->get_link(i)->facing_rad / 2.0);
     }
     pub_em.publish(em_map);
-	cerr << "publication" << endl;
+	std::cerr << "publication" << std::endl;
   }
 
   em_marker.header.stamp = ros::Time::now();

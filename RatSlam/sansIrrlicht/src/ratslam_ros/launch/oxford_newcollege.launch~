@@ -10,9 +10,4 @@
 	<node pkg="rqt_plot" type="rqt_plot" name="plot_vt_em" args="/newcollege/LocalView/Template/current_id,/newcollege/PoseCell/TopologicalAction/dest_id" />
 	<node pkg="rosbag" type="record" name="record" args="/newcollege/ExperienceMap/Map /newcollege/ExperienceMap/RobotPose /newcollege/LocalView/Template /newcollege/PoseCell/TopologicalAction -O newcollege_out.bag" />
 
-
-
-	<!-- POUR AFFICHER LA MAP -->
-	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="$(find ratslam_ros)/config/config_oxford_newcollege.txt" />
-
 </launch>

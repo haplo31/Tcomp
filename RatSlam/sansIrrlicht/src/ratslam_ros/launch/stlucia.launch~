@@ -11,7 +11,4 @@
 	<node pkg="rqt_plot" type="rqt_plot" name="plot_vt_em" args="/stlucia/LocalView/Template/current_id,/stlucia/PoseCell/TopologicalAction/dest_id" />
 	<node pkg="rosbag" type="record" name="record" args="/stlucia/ExperienceMap/Map /stlucia/ExperienceMap/RobotPose /stlucia/LocalView/Template /stlucia/PoseCell/TopologicalAction -O ratslam_out.bag" />
 
-	<!-- POUR AFFICHER LA MAP -->
-	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="$(find ratslam_ros)/config/config_stlucia.txt" />
-
 </launch>
