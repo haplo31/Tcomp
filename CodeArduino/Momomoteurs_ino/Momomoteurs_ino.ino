@@ -8,11 +8,11 @@ String DistanceDegres;
 int cptcarac=0;
 long derniercgtcompteur=0;
 int transfert=1;
-String usbrecue="";
+String distancedegresrecue="";
+String commanderecue="";
 String A="A";
 byte ch;
-String degresrecus;
-String distancerecue;
+
 
 float calculTempo;
 float time=0;
@@ -552,114 +552,81 @@ void loop()
 
       timer.run();
 
-    if ((cptcarac==0)&&(Serial.available()))
+  if (Serial.available())
   {
     ch=Serial.read();
-    usbrecue=usbrecue+char(ch);
-    if (usbrecue=="A")
+    commanderecue=usbrecue+char(ch);
+    while (Serial.available())
+    {
+      ch=Serial.read();
+      distancedegresrecue=usbrecue+(char)ch;
+    }
+    if (commanderecue=="A")
     {
       if (stop==1)
       {
-      distancecm=(distancerecue.toInt());
+      distancecm=(distancedegresrecue.toInt());
       avancer=1;
-      cptcarac=0;
-      usbrecue="";
+      distancedegresrecue="";
+      commanderecue="";
       time=0;
       stop=0;
       }
       
     } 
-     else if (usbrecue=="R")
+     else if (commanderecue=="R")
     {
        if (stop==1)
       {
-      distancecm=(distancerecue.toInt());
+      distancecm=(distancedegresrecue.toInt());
       reculer=1;
-      cptcarac=0;
-      usbrecue="";
+      distancedegresrecue="";
+      commanderecue="";
       time=0;
       stop=0;
       }
  
     }
-    else if (usbrecue=="G")
+    else if (commanderecue=="G")
     {
        if (stop==1)
       {
-      rotationdegres=(degresrecus.toInt());
+      rotationdegres=(distancedegresrecue.toInt());
       //Serial.println(rotationdegres);
       TournerGauche=1;
-      cptcarac=0;
-      usbrecue="";
+      distancedegresrecue="";
+      commanderecue="";
       time=0;
       stop=0;
       }
  
       
     }
-    else if (usbrecue=="D")
+    else if (commanderecue=="D")
     {
        if (stop==1)
       {
-      rotationdegres=(degresrecus.toInt());
+      rotationdegres=(distancedegresrecue.toInt());
       TournerDroite=1;
-      cptcarac=0;
-      usbrecue="";
+      distancedegresrecue="";
+      commanderecue="";
       time=0;
       stop=0;
       }
        
     }
-    else if (usbrecue=="S")
+    else if (commanderecue=="S")
     {
       distancecm=0;
       rotationdegres=0;
       stop=1;
      analogWrite(MotorD, 0);
      analogWrite(MotorG, 0);
-      cptcarac=0;
-      usbrecue=""; 
-    }
-    else if ((usbrecue=="i")||(usbrecue=="d"))
-    {
-    usbrecue="";
-    DistanceDegres+=(char)ch;
-    cptcarac++;
-    }
-    else
-    {
-      usbrecue="";
+      distancedegresrecue="";
+      commanderecue="";
     }
   }
-  else
-  {
-
-    if (Serial.available())
-    {
-      ch=Serial.read();
-      usbrecue=usbrecue+(char)ch;
-      cptcarac++;
-    }
- 
-    if ((cptcarac==4)&&(!Serial.available()))
-    {
-      if (DistanceDegres=="i")
-      {
-      distancerecue=usbrecue;
-      DistanceDegres="";
-      }
-      else if (DistanceDegres=="d")
-      {
-        degresrecus=usbrecue;
-        DistanceDegres="";
-        
-      }
-      cptcarac=0;
-      usbrecue="";
-    }
-    
-    
-  }
+  
 
 
 } 
