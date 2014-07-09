@@ -63,17 +63,53 @@
 
 
      </style>
+    
 
 
-     <title>jQuery Knob demo</title>
+
+
+
+     <title>TComp Command Center</title>
      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
      <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
 
      <script src="js/jquery.knob.js"></script>
+    <!--<script type="text/javascript" src="recupid.js"></script>-->
      <script>
+     /*
+URL = "recupid.php";
+function rafraichir() {
+        if (window.XMLHttpRequest) xhr = new XMLHttpRequest();
+        else if (window.ActiveXObject) xhr = new ActiveXObject('Microsoft.XMLHTTP');
+        else alert('JavaScript : votre navigateur ne supporte pas les objets XMLHttpRequest...');
+        xhr.open('GET',URL,true);
+        xhr.onreadystatechange = ajaxReponse;
+        xhr.send(null);
+}
+ 
+function ajaxReponse() {
+        if (xhr.readyState == 4) {
+                document.getElementById("page",true).innerHTML=xhr.responseText; // ici sa s'incrute dans la div <div id="page"></div> mais peut etre <td id="page">  ... Ici c'est L'id l'important
+                var timer=setTimeout("rafraichir()",2000); // rafraichie toute les 25secs
+        }
+}*/
+function file(fichier)
+{
+if(window.XMLHttpRequest) // FIREFOX
+xhr_object = new XMLHttpRequest();
+else if(window.ActiveXObject) // IE
+xhr_object = new ActiveXObject("Microsoft.XMLHTTP");
+else
+return(false);
+xhr_object.open("GET", fichier, false);
+xhr_object.send(null);
+if(xhr_object.readyState == 4) return(xhr_object.responseText);
+else return(false);
+}
      function RefreshIMG() {
-       document.images[img].src=src+"?a="+Math.random(1);
-       setTimeout("RefreshIMG()",delay*1000);
+      
+       setTimeout("RefreshIMG()",delay*1000); 
+
        recupwidth=document.documentElement.clientWidth
        if (recupwidth<800)
        {
@@ -310,38 +346,42 @@
     var valeurcm
     var recupwidth
     var reso
-
     var ListeCommandes=new Array();
     var Tailletableau=0;
-    function TransfertCommande(action)
+    var pidbash;
+     function TransfertCommande(action)
     {
-    document.location="cgi-bin/TransfertDegres.py?action="+action; 
+    document.location="cgi-bin/TransfertData.py?action="+action; 
     }
     function CheckCommande(){
-    while (Tailletableau>0) //TROUVER MOYEN DE RELANCER CA TOUTES LES SECONDES
+
+    setTimeout("CheckCommande()",delay*500);
+    pidbash=file('recupid.php');
+
+    while (Tailletableau>0)
     {
+
         //ICI VERIFIER SI PROCESS DU BASH QUI ATTEND ARDUINO EST FERME
-        //SI OUI
-        Tailletableau--; //On decremente ici pour rester dans le while tant que l'arduino a pas dit OK
-        // du coup on voit si on envoit la commande avec le if is_null du dessous
-        var CommandToSend = ListeCommandes[1]; //On prend la valeur 1 vu que la premiere est toujours ecrite dans 1
-        ListeCommandes.shift(); //Commande pour recup valeur 1 et decaler valeurs tableau
-        if (CommandToSend === NULL)
+        if(pidbash===1)
         {
-          
+          Tailletableau--; //On decremente ici pour rester dans le while tant que l'arduino a pas dit OK
+          // du coup on voit si on envoit la commande avec le if is_null du dessous
+          var CommandToSend = ListeCommandes[1]; //On prend la valeur 1 vu que la premiere est toujours ecrite dans 1
+          ListeCommandes.shift(); //Commande pour recup valeur 1 et decaler valeurs tableau
+          if (CommandToSend === NULL)
+          {
+          }
+          else
+          {
+          TransfertCommande(CommandToSend)
+          }
         }
-        else
-        {
-        TransfertCommande(CommandToSend)
-       //document.location="cgi-bin/TransfertDegres.py?action="+echo(ListeCommandes[1]);
-        }
-        //SI NON ON FAIT QUE DALLE
 
-      }
+    
     }
-    // MODIFIER TRANSFERT DISTANCE ET DEGRES POUR ENVOYER AUSSI A,R,G ou D
-
-   function Avancer()
+   }
+    
+    function Avancer()
     {
     valeurcm=$("input.knob").val();
     distancesaisie=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
@@ -352,6 +392,11 @@
     }
   function TournerG()
   {
+  //var pidbash=<?php echo `pidof X`; ?>;
+  //var pidbash=<?php echo file_exists( "/proc/".system(`pidof Xasqdq`) ); ?>;
+
+   alert(pidbash);
+
    valeurcm=$("input.knob2").val();
    degressaisis=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
    Tailletableau++;
@@ -398,10 +443,6 @@
   <input class="knob2" data-min="0" data-max="360" data-step="10" data-angleOffset=-90 data-angleArc=360 value="0" data-displayInput=true data-width="300" data-height="300" data-thickness=".3">
 </div>             
 <form name="form1" method="post" action=""> 
-  <div id=boutonOK1 style="position:absolute;left:25%;top:30%">
-    <img src="page/ok.jpg" height="64"  width="64" id="o" onmousedown="TransfertDistance()">
-    <div id=boutonOK2 style="position:absolute;left:650%;top:25%">
-      <img src="page/ok.jpg" height="64"  width="64" id="o2" onmousedown="TransfertDegres()">
     </div>
   </div>
   <br>
@@ -431,7 +472,6 @@
   </div>
 
 </div>
-
 
 </div>
 </body>
