@@ -373,7 +373,7 @@ else return(false);
       }
       document.getElementById("TabCommandes").innerHTML=commandcomp;
       commandcomp=""
-   /* 
+   
       
         //ICI VERIFIER SI PROCESS DU BASH QUI ATTEND ARDUINO EST FERME
         if(pidbash===1)
@@ -390,7 +390,6 @@ else return(false);
           TransfertCommande(CommandToSend)
           }
         }
-    */
     }
    }
     
@@ -483,11 +482,11 @@ else return(false);
 <div id=camera style="position:absolute;left:31.5%;top:5%">
   <IMG id="image" name="image" src="page/test.jpg" width=256 height=256 alt="Cette image se recharge toutes les 1 secondes">
   </div>
+
 <div id=TabCommandesText style="position:absolute;left:12.5%;top:45%">
   Liste Commandes en attente
 </div>
-<div id=TabCommandes style="position:absolute;left:17.5%;top:48%">
-  
+<div id=TabCommandes style="position:absolute;left:17.5%;top:48%" >
 </div>
 </div>
 
