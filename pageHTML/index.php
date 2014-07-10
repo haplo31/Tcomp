@@ -60,7 +60,11 @@
          font-style: italic;
        }
      }
-
+div.tab
+    {
+    width : 40px;
+    }
+ 
 
      </style>
     
@@ -109,7 +113,6 @@ else return(false);
      function RefreshIMG() {
       
        setTimeout("RefreshIMG()",delay*1000); 
-
        recupwidth=document.documentElement.clientWidth
        if (recupwidth<800)
        {
@@ -349,18 +352,29 @@ else return(false);
     var ListeCommandes=new Array();
     var Tailletableau=0;
     var pidbash;
+    var commandcomp=""
      function TransfertCommande(action)
     {
     document.location="cgi-bin/TransfertData.py?action="+action; 
+    }
+    function Start(){
+      CheckCommande();
+      RefreshIMG();
     }
     function CheckCommande(){
 
     setTimeout("CheckCommande()",delay*500);
     pidbash=file('recupid.php');
-
-    while (Tailletableau>0)
+    if (Tailletableau>0)
     {
-
+      for (i=1;i<=Tailletableau;i++)
+      {
+      commandcomp=commandcomp+ListeCommandes[i]+'<br>'
+      }
+      document.getElementById("TabCommandes").innerHTML=commandcomp;
+      commandcomp=""
+   /* 
+      
         //ICI VERIFIER SI PROCESS DU BASH QUI ATTEND ARDUINO EST FERME
         if(pidbash===1)
         {
@@ -376,8 +390,7 @@ else return(false);
           TransfertCommande(CommandToSend)
           }
         }
-
-    
+    */
     }
    }
     
@@ -387,7 +400,6 @@ else return(false);
     distancesaisie=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
      Tailletableau++;
       ListeCommandes[Tailletableau]="A"+distancesaisie;
-      alert(ListeCommandes[1]+"  "+ListeCommandes[2]+"  "+ListeCommandes[3]);
     //document.location="cgi-bin/Avancer.py";
     }
   function TournerG()
@@ -395,7 +407,6 @@ else return(false);
   //var pidbash=<?php echo `pidof X`; ?>;
   //var pidbash=<?php echo file_exists( "/proc/".system(`pidof Xasqdq`) ); ?>;
 
-   alert(pidbash);
 
    valeurcm=$("input.knob2").val();
    degressaisis=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
@@ -435,7 +446,9 @@ else return(false);
   </script>
 
 </head>
-<body onLoad="RefreshIMG()">
+  <body onLoad="Start()">
+
+
  <div style="position:absolute;left:10%;top:5%">
   <input class="knob" data-min="0" data-max="150" data-angleOffset="-90" data-step="5" data-angleArc=360 value="0" data-fgColor="#ffec03" data-displayInput=true data-width="300"  data-height="300" data-thickness=".3">
 </div>
@@ -470,7 +483,12 @@ else return(false);
 <div id=camera style="position:absolute;left:31.5%;top:5%">
   <IMG id="image" name="image" src="page/test.jpg" width=256 height=256 alt="Cette image se recharge toutes les 1 secondes">
   </div>
-
+<div id=TabCommandesText style="position:absolute;left:12.5%;top:45%">
+  Liste Commandes en attente
+</div>
+<div id=TabCommandes style="position:absolute;left:17.5%;top:48%">
+  
+</div>
 </div>
 
 </div>
