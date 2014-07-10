@@ -342,6 +342,7 @@ if (( ((TotalCodeurG+TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_pa
       // delay(2000); 
    //  digitalWrite(IN1,HIGH);
     // digitalWrite(IN2,LOW); 
+      Serial.println("done");
 
 }  
 else
@@ -368,19 +369,19 @@ else
  timef = (float) time; 
  consigne_moteur_nombre_tours_par_secondeG= 0.1*(timef+cmdParallele);
  consigne_moteur_nombre_tours_par_secondeD=0.1*(timef-cmdParallele);
- Serial.println("Accel");
+ //Serial.println("Accel");
  }
  else
  {
  timef2= (float) time;
- Serial.println(consigne_moteur_nombre_tours_par_secondeG);
+ //Serial.println(consigne_moteur_nombre_tours_par_secondeG);
  consigne_moteur_nombre_tours_par_secondeG= botch-( 0.1*((timef2-timef)+cmdParallele) );
  consigne_moteur_nombre_tours_par_secondeD = botch-( 0.1*((timef2-timef)-cmdParallele) );
   if  ((consigne_moteur_nombre_tours_par_secondeG<0.05)||(consigne_moteur_nombre_tours_par_secondeD<0.05))
   {
-    Serial.println(botch);
-    Serial.println(timef);
-    Serial.println(timef2);
+    //Serial.println(botch);
+    //Serial.println(timef);
+    //Serial.println(timef2);
   distancecm=0;
   }
   }
@@ -426,7 +427,7 @@ void Obstacle ()
   digitalWrite(trig, LOW); 
   lecture_echo = pulseIn(echo, HIGH); 
   cm = lecture_echo / 58; 
-  Serial.println (cm);
+  //Serial.println (cm);
   if (cm<15)
  {
     stop=1;
@@ -437,7 +438,7 @@ void Obstacle ()
      	analogWrite(MotorD, cmdD);
         analogWrite(MotorG, cmdG);
         stop=1;
-     Serial.println ("Obstacle");
+     //Serial.println ("Obstacle");
 
  }   
 }  
@@ -473,6 +474,7 @@ if ( (((TotalCodeurG+TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_pa
   TournerGauche=0;
   TournerDroite=0;
   time=0;
+  Serial.println("done");
   
   
 }  
