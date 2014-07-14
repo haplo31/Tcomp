@@ -111,7 +111,7 @@ if(xhr_object.readyState == 4) return(xhr_object.responseText);
 else return(false);
 }
      function RefreshIMG() {
-      
+      document.images[img].src=src+"?a="+Math.random(1);
        setTimeout("RefreshIMG()",delay*1000); 
        recupwidth=document.documentElement.clientWidth
        if (recupwidth<800)
@@ -353,10 +353,13 @@ else return(false);
     var Tailletableau=0;
     var pidbash;
     var commandcomp=""
-     function TransfertCommande(action)
+    var action
+     function TransfertCommande()
     {
+	alert(action)
+
     document.location="cgi-bin/TransfertData.py?action="+action; 
-    }
+   }
     function Start(){
       CheckCommande();
       RefreshIMG();
@@ -376,18 +379,21 @@ else return(false);
    
       
         //ICI VERIFIER SI PROCESS DU BASH QUI ATTEND ARDUINO EST FERME
-        if(pidbash===1)
+	if(pidbash==1)
         {
+//	 alert("toto");
           Tailletableau--; //On decremente ici pour rester dans le while tant que l'arduino a pas dit OK
           // du coup on voit si on envoit la commande avec le if is_null du dessous
           var CommandToSend = ListeCommandes[1]; //On prend la valeur 1 vu que la premiere est toujours ecrite dans 1
           ListeCommandes.shift(); //Commande pour recup valeur 1 et decaler valeurs tableau
-          if (CommandToSend === NULL)
+          if (CommandToSend == "NULL")
           {
+//	 alert("toto if");
           }
           else
           {
-          TransfertCommande(CommandToSend)
+	  action=CommandToSend
+	TransfertCommande()
           }
         }
     }
@@ -395,6 +401,7 @@ else return(false);
     
     function Avancer()
     {
+	alert(pidbash);
     valeurcm=$("input.knob").val();
     distancesaisie=str_pad(valeurcm,3,0,'STR_PAD_LEFT');
      Tailletableau++;
@@ -438,10 +445,17 @@ else return(false);
   }
   function ActiverCam()
   {
-    alert("Ok");
-    //document.location="cgi-bin/ActiverCam.py";
+   // alert("Ok");
+    document.location="cgi-bin/ActiverCam.py";
+//raspistill -t 30000 -tl 1000 -q 30 -vf -w 128 -h 128 -o /var/www/page/test.jpg
+
 
   }
+  function DesactiverCam()
+  {
+    document.location="cgi-bin/DesactiverCam.py";
+  }
+
   </script>
 
 </head>
@@ -475,10 +489,15 @@ else return(false);
   <img src="page/reculer.jpg" id="re" onmousedown="Reculer()">
 </div>
 <br>
-<div id=camerabouton style="position:absolute;left:35%;top:2%">
+<div id=camerabouton style="position:absolute;left:31%;top:2%">
   <input type="button" id="bc" value="Activer Camera" onclick="ActiverCam()">
   <br>
 </div>
+<div id=cameraboutondesactive style="position:absolute;left:39%;top:2%">
+  <input type="button" id="bc" value="Desactiver Camera" onclick="DesactiverCam()">
+  <br>
+</div>
+
 <div id=camera style="position:absolute;left:31.5%;top:5%">
   <IMG id="image" name="image" src="page/test.jpg" width=256 height=256 alt="Cette image se recharge toutes les 1 secondes">
   </div>
