@@ -557,11 +557,11 @@ void loop()
   if (Serial.available())
   {
     ch=Serial.read();
-    commanderecue=usbrecue+char(ch);
+    commanderecue=commanderecue+char(ch);
     while (Serial.available())
     {
       ch=Serial.read();
-      distancedegresrecue=usbrecue+(char)ch;
+      distancedegresrecue=distancedegresrecue+(char)ch;
     }
     if (commanderecue=="A")
     {
