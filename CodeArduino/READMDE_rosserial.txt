@@ -1,0 +1,10 @@
+roscore &
+rosrun rosserial_python serial_node.py /dev/ttyACM0 &
+rostopic echo chatter
+
+
+pour avoir le MOMOMOTEUR original, décommenter la loop et virer les
+
+// debut test rosserial
+..
+// fin test rosserial
