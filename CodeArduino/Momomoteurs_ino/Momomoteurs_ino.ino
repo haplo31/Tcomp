@@ -3,6 +3,18 @@
 SimpleTimer timer; // Timer pour ?chantillonnage
 
 
+// début test rosserial
+#include <ros.h>
+#include <std_msgs/String.h>
+
+ros::NodeHandle  nh;
+
+std_msgs::String str_msg;
+ros::Publisher chatter("chatter", &str_msg);
+
+char hello[13] = "hello world!";
+// fin test rosserial
+
 
 String DistanceDegres;
 int cptcarac=0;
@@ -112,8 +124,13 @@ float kdd = 0.0;           // Coefficient d?rivateur
 
 void setup() 
 {
-         EncoderInit();//Initialize the module
-	Serial.begin(115200);   // Initialisation port COM
+        // debut test rosserial
+        nh.initNode();
+        nh.advertise(chatter);
+        // fin test rosserial
+        
+        EncoderInit();//Initialize the module
+	//Serial.begin(115200);   // Initialisation port COM
 	pinMode(IN1,OUTPUT);
 	//pinMode(IN2,OUTPUT);
 	pinMode(IN3,OUTPUT);
@@ -134,12 +151,22 @@ void setup()
           timer.setInterval(100, tempo);
          // timer.setInterval(20,parallelisme);
         timer.setInterval(1000/frequence_echantillonnage, Tourner);
+        timer.setInterval(100,chatterBoy);
           pinMode(trig, OUTPUT); 
   digitalWrite(trig, LOW); 
   pinMode(echo, INPUT); 
-  Serial.begin(115200); 
   stop=1;
 }
+
+// debut test rosserial
+void chatterBoy()
+{
+  str_msg.data = "caca"; //char(TotalCodeurG);
+  chatter.publish( &str_msg );
+  nh.spinOnce();
+}
+// fin test rosserial
+
 void EncoderInit()
 {
   DirectionD = false;//default -> Forward 
@@ -554,6 +581,7 @@ void loop()
 
       timer.run();
 
+/*
   if (Serial.available())
   {
     ch=Serial.read();
@@ -629,7 +657,7 @@ void loop()
     }
   }
   
-
+*/
 
 } 
 
