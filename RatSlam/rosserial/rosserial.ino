@@ -7,11 +7,12 @@ SimpleTimer timer; // Timer pour ?chantillonnage
 
 #include <ros.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Float64.h>
 
 ros::NodeHandle  nh;
 
-std_msgs::String str_msg;
-ros::Publisher chatter("chatter", &str_msg);
+std_msgs::Float64 floatmsg;
+ros::Publisher chatter("chatter", &floatmsg);
 
 char hello[13] = "hello world!";
 
@@ -72,7 +73,7 @@ long CodeurD=0;
 int CodeurParalleleG=0;
 int CodeurParalleleD=0;
 long TotalCodeurG=0;
-unsigned TotalCodeurD=0;
+long TotalCodeurD=0;
 long TempoCodeur=0;
 long TempoCodeurPrec=0;
 const byte encoder0pinA = 21;//A pin -> the interrupt pin 2
@@ -124,6 +125,11 @@ float kdd = 0.0;           // Coefficient d?rivateur
  float timef, timef2;
 /* Routine d'initialisation */
 
+long prevTCG=0;
+long prevTCD=0;
+
+int jeanmarie=0;
+
 void setup() 
 {
         // debut test rosserial
@@ -132,7 +138,7 @@ void setup()
         // fin test rosserial
         
         EncoderInit();//Initialize the module
-	Serial.begin(115200);   // Initialisation port COM
+	//Serial.begin(115200);   // Initialisation port COM
 	pinMode(IN1,OUTPUT);
 	//pinMode(IN2,OUTPUT);
 	pinMode(IN3,OUTPUT);
@@ -154,7 +160,7 @@ void setup()
          // timer.setInterval(20,parallelisme);
         timer.setInterval(1000/frequence_echantillonnage, Tourner);
 	// debut test rosserial        
-	timer.setInterval(100,chatterBoy);
+	timer.setInterval(500,chatterBoy);
           // fin test rosserial
 	pinMode(trig, OUTPUT); 
   digitalWrite(trig, LOW); 
@@ -166,8 +172,33 @@ void setup()
 
 void chatterBoy()
 {
-  str_msg.data = "caca"; //char(TotalCodeurG);
-  chatter.publish( &str_msg );
+
+floatmsg.data = (( (float) TotalCodeurG - (float) prevTCG + (float) TotalCodeurD - (float) prevTCD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse)/(100*0.5); 
+prevTCG= TotalCodeurG;
+prevTCD= TotalCodeurD;
+//voir comment ratslam  rosbag envoie ça à l'algo ratslam
+  /*
+  if (jeanmarie==0)
+  {
+    str_msg.data = "a"; //char(TotalCodeurG);
+    jeanmarie++;
+  }
+  else
+  {
+    str_msg.data = "o";
+    jeanmarie--;
+  }
+  
+chatter.publish( &str_msg );
+*/
+  chatter.publish( &floatmsg );
+  /*
+  if (floatmsg.data>50)
+  {
+     floatmsg.data=0;
+  }
+  */
+  //floatmsg.data++;
   nh.spinOnce();
 }
 
@@ -252,6 +283,7 @@ void LwheelSpeed()
   {
     CodeurG++;
     TotalCodeurG++;
+ floatmsg.data = (( (float) TotalCodeurG + (float) TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse);
    }
 }
 void tempo()
