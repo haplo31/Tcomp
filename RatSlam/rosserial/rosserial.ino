@@ -8,11 +8,18 @@ SimpleTimer timer; // Timer pour ?chantillonnage
 #include <ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/Int16.h>
 
 ros::NodeHandle  nh;
 
-std_msgs::Float64 floatmsg;
+
+std_msgs::Float64 floatmsg;  
+std_msgs::Int16 intmsg;
+//test 01/09/14
+//std_msgs::Float64MultiArray floatmsg;
+
 ros::Publisher chatter("chatter", &floatmsg);
+ros::Publisher chatter2("chatter2", &intmsg);
 
 char hello[13] = "hello world!";
 
@@ -135,6 +142,8 @@ void setup()
         // debut test rosserial
         nh.initNode();
         nh.advertise(chatter);
+	nh.advertise(chatter2);
+	//floatmsg.data.resize(5);
         // fin test rosserial
         
         EncoderInit();//Initialize the module
@@ -161,6 +170,7 @@ void setup()
         timer.setInterval(1000/frequence_echantillonnage, Tourner);
 	// debut test rosserial        
 	timer.setInterval(500,chatterBoy);
+	timer.setInterval(1000,chatterBoy2);
           // fin test rosserial
 	pinMode(trig, OUTPUT); 
   digitalWrite(trig, LOW); 
@@ -169,11 +179,17 @@ void setup()
 }
 
 // debut test rosserial
-
+void chatterBoy2()
+{
+	intmsg.data = 12; 
+	chatter2.publish( &intmsg );
+	nh.spinOnce();
+}
 void chatterBoy()
 {
 
-floatmsg.data = (( (float) TotalCodeurG - (float) prevTCG + (float) TotalCodeurD - (float) prevTCD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse)/(100*0.5); 
+floatmsg.data = ( ( (float) TotalCodeurG - (float) prevTCG + (float) TotalCodeurD - (float) prevTCD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse)/(100*0.5);
+//floatmsg.data[1] = 2;
 prevTCG= TotalCodeurG;
 prevTCD= TotalCodeurD;
 //voir comment ratslam  rosbag envoie ça à l'algo ratslam
@@ -283,7 +299,6 @@ void LwheelSpeed()
   {
     CodeurG++;
     TotalCodeurG++;
- floatmsg.data = (( (float) TotalCodeurG + (float) TotalCodeurD)*diamrouecm*3.14)/(4*rapport_reducteur*tick_par_tour_codeuse);
    }
 }
 void tempo()
@@ -368,6 +383,8 @@ void asservissement()
 
     // DEBUG
      bilup=(TotalCodeurG)*diamrouecm*3.14/(2*rapport_reducteur*tick_par_tour_codeuse);
+
+
      biluplup= (TotalCodeurD)*diamrouecm*3.14/(2*rapport_reducteur*tick_par_tour_codeuse);
 
   

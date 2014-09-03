@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "ratslam_ros")
+set(ratslam_ros_MAINTAINER "David Ball <davidmichaelball@gmail.com>")
+set(ratslam_ros_DEPRECATED "")
+set(ratslam_ros_VERSION "0.0.1")
+set(ratslam_ros_BUILD_DEPENDS "message_generation" "std_msgs" "geometry_msgs" "roscpp" "sensor_msgs" "nav_msgs" "opencv2" "tf" "visualization_msgs" "image_transport" "nav_msgs" "boost")
+set(ratslam_ros_RUN_DEPENDS "message_runtime" "std_msgs" "geometry_msgs" "roscpp" "sensor_msgs" "nav_msgs" "opencv2" "tf" "visualization_msgs" "image_transport" "boost")
+set(ratslam_ros_BUILDTOOL_DEPENDS "catkin")

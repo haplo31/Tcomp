@@ -100,10 +100,10 @@ target_link_libraries(ratslam_vo
   ${OpenCV_LIBRARIES})
 
 
-#add_executable(TOTOpublish src/main_TOTO.cpp) #j'ai rajuté ceci
-#target_link_libraries(TOTOpublish # cela
-#  ${catkin_LIBRARIES} # et ceci
-#  ratslam) # et cela
+add_executable(TOTOpublish src/main_TOTO.cpp) #j'ai rajuté ceci
+target_link_libraries(TOTOpublish # cela
+  ${catkin_LIBRARIES} # et ceci
+  ratslam) # et cela
 # et voila. Merci de votre attention
 
 #add_executable(TOTOpublish src/publisher_odo_tcomp.cpp) #j'ai rajuté ceci

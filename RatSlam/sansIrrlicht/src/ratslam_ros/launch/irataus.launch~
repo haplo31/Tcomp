@@ -12,8 +12,17 @@
 
 	<node pkg="image_view" type="image_view" name="overhead" args="image:=/overhead/camera/image _image_transport:=compressed" />
 
-
-	<!-- POUR AFFICHER LA MAP -->
-	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="/newcollege/ExperienceMap/Map" />
 	
+	<!-- POUR AFFICHER LA MAP -->
+	 <node pkg="ratslam_ros" type="TOTOlistenToMap" name="TOTOMAPNODE" args="$(find ratslam_ros)/config/config_irataus.txt" />
+
+	<node pkg="ratslam_ros" type="TOTOpublish" name="TOTODRO" args="$(find ratslam_ros)/config/config_irataus.txt" />
+
+	<!-- POUR ENVOYER odometrie et commandes -->
+	<node pkg="rosserial_python" type="serial_node.py" name="MAXISERIAL" args="/dev/ttyACM0"/>
+
+	<!-- POUR ENVOYER l'image de la cam -->
+	<node pkg="image_view" type="image_view" name="MaCam" args="image:=/irat_red/camera/image_raw _image_transport:=compressed" />
+	
+
 </launch>

@@ -6,6 +6,9 @@
 //#include <sstream>
 #include <nav_msgs/Odometry.h>
 #include "std_msgs/String.h"
+#include <std_msgs/Float64.h>
+
+
  
 using namespace std;
 
@@ -121,8 +124,8 @@ int main(int argc, char **argv)
 
 	ros::init(argc, argv, "TOTOtalker");
 	ros::NodeHandle node;
-//      string topic_root = "irat_red";
-        string topic_root = "/newcollege/";
+        string topic_root = "irat_red";
+     //   string topic_root = "/newcollege/";
 
 	ros::Publisher pub_odometry = node.advertise<nav_msgs::Odometry>(topic_root + "/odom", 0);
 
@@ -216,7 +219,7 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 
 	        loop_rate.sleep();
-cerr << "COUNT: " << count << endl;
+		cerr << "COUNT: " << count << endl;
                 ++count;
          }
 	 fichier.close();
