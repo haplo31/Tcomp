@@ -10,7 +10,7 @@
 	<node pkg="rqt_plot" type="rqt_plot" name="plot_vt_em" args="/irat_red/LocalView/Template/current_id,/irat_red/PoseCell/TopologicalAction/dest_id" />
 	<node pkg="rosbag" type="record" name="record" args="/irat_red/ExperienceMap/Map /irat_red/ExperienceMap/RobotPose /irat_red/LocalView/Template /irat_red/PoseCell/TopologicalAction /overhead/pose -O ratslam_out.bag" />
 
-	<node pkg="image_view" type="image_view" name="overhead" args="image:=/overhead/camera/image _image_transport:=compressed" />
+<!-- <node pkg="image_view" type="image_view" name="overhead" args="image:=/overhead/camera/image _image_transport:=compressed" /> -->
 
 	
 	<!-- POUR AFFICHER LA MAP -->

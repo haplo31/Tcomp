@@ -21,8 +21,8 @@
 	<!-- POUR ENVOYER odometrie et commandes -->
 	<node pkg="rosserial_python" type="serial_node.py" name="MAXISERIAL" args="/dev/ttyACM0"/>
 
-	<!-- POUR ENVOYER l'image de la cam -->
-	<node pkg="image_view" type="image_view" name="MaCam" args="image:=/irat_red/camera/image_raw _image_transport:=compressed" />
+	<!-- POUR ENVOYER l'image de la camera -->
+	<node pkg="image_view" type="image_view" name="MaCam" args="image:=/camera/image_raw _image_transport:=compressed" />
 	
 
 </launch>
